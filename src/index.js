@@ -1,4 +1,9 @@
-let a= 'vue';
-console.log(a);
+import { initMixin } from "./instance/init";
 
-export default a;
+function Vue(options) {
+  this._init(options); //初始化
+}
+
+initMixin(Vue); //给原型加 init方法
+
+export default Vue;
