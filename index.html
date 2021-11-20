@@ -21,7 +21,14 @@
       }
     })
     vm.arr.push({ test: '11' })
-    debugger
+
+
+    // 延时更新下数据
+    setTimeout(() => {
+      vm.name = 'hello'
+      vm._update(vm._render())
+    }, 2000)
+
   </script>
 </body>
 
