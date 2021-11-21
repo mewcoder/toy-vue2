@@ -26,6 +26,6 @@ export function mountComponent(vm, el) {
   // updateComponent();
 
   new Watcher(vm, updateComponent, () => {
-    console.log('updateComponent');
+    console.log('更新');
   }, true);// true 表示为渲染watcher
 }

@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <div id='app'>{{name}}{{arr}}</div>
+  <div id='app'>{{name}}</div>
   <script src="./dist/umd/vue.js"></script>
   <!-- <script src="./vue.js"></script> -->
   <script>
@@ -17,17 +17,37 @@
       el: '#app',
       data: {
         name: 'vue',
-        arr: [1, 2, 3, 4, 5]
-      }
+        // age: {
+        //   num: 18
+        // },
+        // arr: [1, 2, 3, 4, 5]
+      },
+      watch: {
+        name: function (val, oldVal) {
+          console.log('watch:', val, oldVal)
+        },
+        // 'age.num': function (newVal, oldVal) {
+        //   console.log(newVal, oldVal)
+        // },
+        // name: [
+        //   function (val, oldVal) {
+        //     console.log('1:', val, oldVal)
+        //   },
+        //   function (val, oldVal) {
+        //     console.log('2:', val, oldVal)
+        //   }
+        // ]
+      },
     })
 
-
+    // console.log(vm.$data)
+    // debugger
 
     // 延时更新下数据
     setTimeout(() => {
       vm.name = 'hello'
-      vm.name = 'world'
-      vm.arr.push(666)
+      // vm.name = 'world'
+      // vm.arr.push(666)
     }, 2000)
 
   </script>
