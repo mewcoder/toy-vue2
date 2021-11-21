@@ -10,6 +10,8 @@ class Watcher {
     this.vm = vm;
     this.expOrFn = expOrFn;
     this.user = !!options.user;
+    this.lazy = !!options.lazy;
+    this.dirty = options.lazy; // 如果是计算属性，那么默认值lazy:true, dirty:true
     if (typeof expOrFn === 'string') {
       // 需要将表达式转化成函数
       this.getter = function () {
@@ -27,19 +29,30 @@ class Watcher {
     this.options = options;
     this.id = ++id;
     // 第一次的value
-    this.value = this.get(); // 默认先执行一次,取值
+    this.value = this.lazy ? undefined : this.get(); // 默认初始化 要取值
   }
   // 更新时可重新调用该方法
   get() {
+    debugger
     // 一个属性可以对应多个watcher
     // 一个watcher可以对应多个属性 
-
     pushTarget(this);
     const value = this.getter.call(this.vm);
     popTarget();
     return value;
   }
 
+  evaluate() {
+    this.dirty = false; // 为false表示取过值了
+    this.value = this.get(); // 用户的getter执行
+  }
+
+  depend() {
+    let i = this.deps.length;
+    while (i--) {
+      this.deps[i].depend(); //lastName,firstName 收集渲染watcher
+    }
+  }
 
   addDep(dep) {
     let id = dep.id;
@@ -51,7 +64,11 @@ class Watcher {
   }
 
   update() {
-    queueWatcher(this);
+    if (this.lazy) {
+      this.dirty = true;
+    } else {
+      queueWatcher(this); // 多次调用update 我希望先将watcher缓存下来，等一会一起更新
+    }
   }
 
   run() {

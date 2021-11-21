@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <div id='app'>{{name}}</div>
+  <div id='app'>{{newName}}</div>
   <script src="./dist/umd/vue.js"></script>
   <!-- <script src="./vue.js"></script> -->
   <script>
@@ -22,21 +22,28 @@
         // },
         // arr: [1, 2, 3, 4, 5]
       },
-      watch: {
-        name: function (val, oldVal) {
-          console.log('watch:', val, oldVal)
-        },
-        // 'age.num': function (newVal, oldVal) {
-        //   console.log(newVal, oldVal)
-        // },
-        // name: [
-        //   function (val, oldVal) {
-        //     console.log('1:', val, oldVal)
-        //   },
-        //   function (val, oldVal) {
-        //     console.log('2:', val, oldVal)
-        //   }
-        // ]
+      // watch: {
+      //   name: function (val, oldVal) {
+      //     console.log('watch:', val, oldVal)
+      //   },
+      // 'age.num': function (newVal, oldVal) {
+      //   console.log(newVal, oldVal)
+      // },
+      // name: [
+      //   function (val, oldVal) {
+      //     console.log('1:', val, oldVal)
+      //   },
+      //   function (val, oldVal) {
+      //     console.log('2:', val, oldVal)
+      //   }
+      // ]
+      // },
+      // 1.默认不执行 
+      // dirty: true, 默认是脏的，要执行。 取值后变成false，依赖发生变化，变成true 
+      computed: {
+        newName: function () {
+          return this.name + '-computed'
+        }
       },
     })
 
