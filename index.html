@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <div id='app'>{{name}}</div>
+  <div id='app'>{{name}}{{arr}}</div>
   <script src="./dist/umd/vue.js"></script>
   <!-- <script src="./vue.js"></script> -->
   <script>
@@ -20,13 +20,14 @@
         arr: [1, 2, 3, 4, 5]
       }
     })
-    vm.arr.push({ test: '11' })
+
 
 
     // 延时更新下数据
     setTimeout(() => {
       vm.name = 'hello'
-      vm._update(vm._render())
+      vm.name = 'world'
+      vm.arr.push(666)
     }, 2000)
 
   </script>

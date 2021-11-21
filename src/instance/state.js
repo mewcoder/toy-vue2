@@ -1,6 +1,6 @@
 import {
   observe,
-} from '../observe/index'
+} from '../observer/index'
 
 
 
