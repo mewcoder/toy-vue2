@@ -33,7 +33,6 @@ class Watcher {
   }
   // 更新时可重新调用该方法
   get() {
-    debugger
     // 一个属性可以对应多个watcher
     // 一个watcher可以对应多个属性 
     pushTarget(this);

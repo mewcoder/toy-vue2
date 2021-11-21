@@ -24,8 +24,19 @@ export function mountComponent(vm, el) {
   };
 
   // updateComponent();
-
+  callHook(vm, 'beforeMount')
   new Watcher(vm, updateComponent, () => {
     console.log('更新');
   }, true);// true 表示为渲染watcher
+
+  callHook(vm, 'mounted')
+}
+
+export function callHook(vm, hook) {
+  let handlers = vm.$options[hook];
+  if (handlers) {
+    for (let i = 0; i < handlers.length; i++) {
+      handlers[i].call(vm)
+    }
+  }
 }

@@ -13,6 +13,11 @@
   <script src="./dist/umd/vue.js"></script>
   <!-- <script src="./vue.js"></script> -->
   <script>
+    Vue.mixin({
+      created() {
+        console.log('created2')
+      }
+    })
     let vm = new Vue({
       el: '#app',
       data: {
@@ -45,6 +50,14 @@
           return this.name + '-computed'
         }
       },
+      created() {
+        console.log('created')
+      },
+      mounted() {
+        console.log('mounted')
+
+      },
+
     })
 
     // console.log(vm.$data)

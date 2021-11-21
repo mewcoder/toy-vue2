@@ -1,12 +1,18 @@
 import { initState } from './state'
-import { mountComponent } from "./lifecycle";
+import { callHook, mountComponent } from "./lifecycle";
 import { compileToFunction } from "../compiler/index";
+import { mergeOptions } from "../util/options";
+
 
 export function initMixin(Vue) {
   Vue.prototype._init = function (options) {
     const vm = this;
-    vm.$options = options;
+    vm.$options = mergeOptions(vm.constructor.options, options);
+
+    callHook(vm, 'beforeCreate');
     initState(vm); //初始化数据
+
+    callHook(vm, 'created');
 
     if (vm.$options.el) {
       // 将数据挂载到这个模板上
