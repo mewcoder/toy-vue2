@@ -175,25 +175,36 @@
     Dep$1.target = stack$1[stack$1.length - 1];
   }
 
+  /**
+   * Observer class that is attached to each observed object(__ob__).
+   * Once attached, the observer converts the target object's property keys
+   * into getter/setters(defineProperty) that collect dependencies and dispatch updates.
+   *
+   *  1.如果数据是对象 会将对象不停的递归 进行劫持
+   *  2.如果是数组，会劫持数组的方法，并对数组中不是基本数据类型的进行检测
+   */
+
   var Observer = /*#__PURE__*/function () {
     function Observer(value) {
       _classCallCheck(this, Observer);
 
       this.value = value;
-      this.dep = new Dep$1(); // 数据可能是数组或者对象，给自身加个dep 
+      this.dep = new Dep$1(); // 数据如果是数组，需要在Observer实例上加dep
+      // 被劫持过的属性都有__ob__（Observer实例）
 
       Object.defineProperty(value, "__ob__", {
         value: this,
-        enumerable: false
+        enumerable: false // 不可枚举
+
       });
 
       if (Array.isArray(value)) {
         value.__proto__ = arrayMethods; // 劫持数组原型方法
 
         this.observeArray(value);
+      } else {
+        this.walk(value);
       }
-
-      this.walk(value);
     } // 遍历所有属性并将它们转换为 getter/setter
 
 
@@ -227,11 +238,11 @@
       configurable: true,
       get: function reactiveGetter() {
         if (Dep$1.target) {
-          dep.depend(); // 让dep记住watcher
+          dep.depend(); // 让 dep 记住 watcher
 
           if (childOb) {
-            // 可能是数组 可能是对象，对象也要收集依赖，后续写$set方法时需要触发他自己的更新操作
-            childOb.dep.depend(); // 就是让数组和对象也记录watcher
+            // 可能是数组可能是对象，对象也要收集依赖，后续写 $set方法时需要触发他自己的更新操作
+            childOb.dep.depend(); // 就是让数组和对象也记录 watcher
 
             if (Array.isArray(val)) {
               //取外层数组要将数组里面的也进行依赖收集
@@ -269,7 +280,7 @@
       return value.__ob__;
     }
 
-    return new Observer(value);
+    return new Observer(value); // 返回Observer实例
   }
 
   var callbacks = [];

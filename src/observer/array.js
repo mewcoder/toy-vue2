@@ -1,7 +1,16 @@
 const arrayProto = Array.prototype;
+
 export const arrayMethods = Object.create(Array.prototype);
 
-const methodsToPatch = ["push", "shift", "unshift", "pop", "reverse", "sort", "splice"];
+const methodsToPatch = [
+  "push",
+  "shift",
+  "unshift",
+  "pop",
+  "reverse",
+  "sort",
+  "splice",
+];
 
 methodsToPatch.forEach((method) => {
   arrayMethods[method] = function (...args) {
@@ -21,9 +30,8 @@ methodsToPatch.forEach((method) => {
     }
     if (inserted) ob.observeArray(inserted); // 对新增的每一项进行观测
 
-
     // 数组的dep 属性
-    ob.dep.notify()
+    ob.dep.notify();
 
     return result;
   };

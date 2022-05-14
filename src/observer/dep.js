@@ -6,7 +6,6 @@ class Dep {
     this.subs = [];
   }
 
-
   depend() {
     if (Dep.target) {
       Dep.target.addDep(this); // 让watch收集的dep
@@ -14,16 +13,15 @@ class Dep {
   }
 
   notify() {
-    this.subs.forEach(sub => sub.update());
+    this.subs.forEach((sub) => sub.update());
   }
 
   addSub(sub) {
     this.subs.push(sub);
   }
-
-
 }
-let stack = [];
+
+const stack = [];
 
 export function pushTarget(watcher) {
   Dep.target = watcher;

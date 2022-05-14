@@ -6,7 +6,6 @@ import { mergeOptions } from "../util/options";
 export function initMixin(Vue) {
   Vue.prototype._init = function (options) {
     const vm = this;
-
     // $options
     vm.$options = mergeOptions(vm.constructor.options, options);
 
