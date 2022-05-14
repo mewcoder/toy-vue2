@@ -8,7 +8,6 @@ import Watcher from '../observer/watcher'
 export function stateMixin(Vue) {
   Vue.prototype.$watch = function (key, handler, options = {}) {
     options.user = true; // 是一个用户自己写的watcher
-
     // vm,name,用户回调，options.user
     new Watcher(this, key, handler, options);
   }
